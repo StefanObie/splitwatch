@@ -1,0 +1,22 @@
+# Private signing key: never commit. Every build must use the same key, so back it up elsewhere.
+developer_key*
+*.der
+*.pem
+*.key
+*.p12
+
+# Build output
+bin/
+*.prg
+*.iq
+*.debug.xml
+gen/
+mir/
+internal-mir/
+external-mir/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
