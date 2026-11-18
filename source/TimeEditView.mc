@@ -99,14 +99,14 @@ class TimeEditView extends WatchUi.View {
 class TimeEditDelegate extends WatchUi.BehaviorDelegate {
 
     private var _m as StopwatchModel;
-    private var _s as SettingsMenu;
     private var _v as TimeEditView;
+    private var _onSaved as Method?;   // called after saving, e.g. to refresh the menu
 
-    function initialize(m as StopwatchModel, s as SettingsMenu, v as TimeEditView) {
+    function initialize(m as StopwatchModel, v as TimeEditView, onSaved as Method?) {
         BehaviorDelegate.initialize();
         _m = m;
-        _s = s;
         _v = v;
+        _onSaved = onSaved;
     }
 
     function onPreviousPage() as Boolean {   // UP
@@ -125,7 +125,10 @@ class TimeEditDelegate extends WatchUi.BehaviorDelegate {
             WatchUi.requestUpdate();
         } else {
             _m.setIntervalCs(_v.valueCs());
-            _s.refresh();
+            var cb = _onSaved;
+            if (cb != null) {
+                cb.invoke();
+            }
             WatchUi.popView(WatchUi.SLIDE_RIGHT);
         }
         return true;

@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
-    <iq:application id="e8b340f4f2e747d4ae3cca99d8f4499f" type="watch-app" name="@Strings.AppName" entry="SplitWatchApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="3.0.0">
+    <iq:application id="e8b340f4f2e747d4ae3cca99d8f4499f" type="watch-app" name="@Strings.AppName" entry="SplitWatchApp" launcherIcon="@Drawables.LauncherIcon" minApiLevel="2.4.0">
         <iq:products>
             <iq:product id="fr945"/>
+            <iq:product id="fr965"/>
+            <iq:product id="fr735xt"/>
         </iq:products>
         <iq:permissions/>
         <iq:languages>

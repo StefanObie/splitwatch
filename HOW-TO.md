@@ -20,7 +20,8 @@ If they don't know it, plug the watch in. The model is in `GARMIN/GarminDevice.x
 Look the model up at **developer.garmin.com/connect-iq/compatible-devices**.
 
 - If the model isn't listed, it can't run Connect IQ apps (basic models like the Forerunner 55 can't), so stop here.
-- If it's listed, check its Connect IQ version: SplitWatch needs **3.0 or higher**.
+- If it's listed, check its Connect IQ version. 3.0 or higher works as is. Connect IQ 2.4 watches use
+  `source-ciq2/` instead (see the `fr735xt` lines in `monkey.jungle`).
 
 ## 3. Download the watch in the SDK Manager
 
@@ -81,10 +82,9 @@ If the file vanishes from `Apps` after unplugging, the build was for the wrong m
 
 ## Different screens and buttons
 
-- **Bigger screen** (e.g. 260 or 280 px wide on the Forerunner 255/265/965): the app works, but the digits
-  won't fill the screen. To fill it, add larger sizes to `HEIGHTS` in `tools/make_fonts.py`, run
-  `python3 tools/make_fonts.py`, add the new fonts to `resources/fonts/fonts.xml` and to the font list in
-  `source/SplitWatchView.mc`, then rebuild. The app picks the biggest size that fits, so the 945 isn't affected.
+- **Different screen size:** the app works, but the digits may not fill the screen. Add a set for the
+  screen size to `SETS` in `tools/make_fonts.py`, run `python3 tools/make_fonts.py`, and point the watch
+  at it in `monkey.jungle` (`<id>.resourcePath = resources;fonts/<set>`), like `fr965`.
 - **Touchscreen-only watches or a different button layout** (e.g. Venu, Vivoactive): the buttons may not
   map the same way and the app may need changes. Try it first.
 

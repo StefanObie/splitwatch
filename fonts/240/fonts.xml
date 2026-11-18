@@ -1,0 +1,11 @@
+<fonts>
+    <font id="Big0" filename="big0.fnt" antialias="true" filter="0123456789:." />
+    <font id="Big1" filename="big1.fnt" antialias="true" filter="0123456789:." />
+    <font id="Big2" filename="big2.fnt" antialias="true" filter="0123456789:." />
+    <font id="Big3" filename="big3.fnt" antialias="true" filter="0123456789:." />
+    <font id="Big4" filename="big4.fnt" antialias="true" filter="0123456789:." />
+    <font id="Big5" filename="big5.fnt" antialias="true" filter="0123456789:." />
+    <font id="Big6" filename="big6.fnt" antialias="true" filter="0123456789:." />
+    <font id="Big7" filename="big7.fnt" antialias="true" filter="0123456789:." />
+    <font id="Big8" filename="big8.fnt" antialias="true" filter="0123456789:." />
+</fonts>

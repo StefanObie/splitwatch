@@ -1,4 +1,3 @@
-import Toybox.Application.Storage;
 import Toybox.Attention;
 import Toybox.Lang;
 import Toybox.System;
@@ -34,15 +33,15 @@ class StopwatchModel {
         _refreshTimer = new Timer.Timer();
         _alertTimer = new Timer.Timer();
 
-        var iv = Storage.getValue("intervalCs");
+        var iv = $.loadSetting("intervalCs");
         if (iv instanceof Number && iv >= 0) {
             intervalCs = iv;
         }
-        var vib = Storage.getValue("vibrate");
+        var vib = $.loadSetting("vibrate");
         if (vib instanceof Boolean) {
             vibrateOn = vib;
         }
-        var snd = Storage.getValue("sound");
+        var snd = $.loadSetting("sound");
         if (snd instanceof Boolean) {
             soundOn = snd;
         }
@@ -109,20 +108,20 @@ class StopwatchModel {
 
     function setIntervalCs(cs as Number) as Void {
         intervalCs = cs;
-        Storage.setValue("intervalCs", cs);
+        $.saveSetting("intervalCs", cs);
         armFromNow();
         WatchUi.requestUpdate();
     }
 
     function setVibrate(on as Boolean) as Void {
         vibrateOn = on;
-        Storage.setValue("vibrate", on);
+        $.saveSetting("vibrate", on);
         armFromNow();
     }
 
     function setSound(on as Boolean) as Void {
         soundOn = on;
-        Storage.setValue("sound", on);
+        $.saveSetting("sound", on);
         armFromNow();
     }
 

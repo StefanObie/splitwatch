@@ -1,1 +1,13 @@
 project.manifest = manifest.xml
+
+# Shared code + one Platform.mc per Connect IQ generation, and the big digit
+# fonts sized for each screen (made by tools/make_fonts.py).
+base.sourcePath = source;source-ciq3
+base.resourcePath = resources;fonts/240
+
+# Forerunner 965: 454x454 AMOLED
+fr965.resourcePath = resources;fonts/454
+
+# Forerunner 735XT: Connect IQ 2, 215x180
+fr735xt.sourcePath = source;source-ciq2
+fr735xt.resourcePath = resources;fonts/215x180

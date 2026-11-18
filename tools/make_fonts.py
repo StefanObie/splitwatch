@@ -4,6 +4,8 @@ SplitWatchView. Only the characters 0-9 : . are included.
 
     python3 tools/make_fonts.py
 
+One set per screen size, in fonts/<set>/ (picked per watch in monkey.jungle).
+
 Each font is cropped so its line height equals the digit height, so
 TEXT_JUSTIFY_VCENTER centres the digits exactly.
 """
@@ -11,16 +13,22 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 TTF = "/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Bold.ttf"
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "resources", "fonts")
-# Digit heights in pixels, biggest first. Ids are Big0..BigN in that order.
-HEIGHTS = [116, 100, 88, 78, 68, 60]
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "fonts")
+# Per screen size: digit heights in pixels, biggest first. Ids are Big0..BigN.
+SETS = {
+# The smallest ones are for the hundredths, drawn smaller after a stopped
+# time over a minute (SplitWatchView uses the size 3 steps down).
+    "240": [116, 100, 88, 78, 68, 60, 52, 46, 40],          # Forerunner 945 (240x240)
+    "454": [220, 190, 166, 147, 128, 113, 98, 87, 76],      # Forerunner 965 (454x454)
+    "215x180": [96, 84, 74, 64, 56, 48, 42, 37, 32],        # Forerunner 735XT (215x180)
+}
 CHARS = "0123456789:."
 GAP = 2                      # pixels between glyphs in the sheet
 PUNCT_SIDE = 4               # side bearing kept around ':' and '.'
 DIGIT_SPACING = 4            # extra space between digits
 
 
-def make(idx, digit_h):
+def make(OUT, idx, digit_h):
     # Find the point size that gives the wanted height for '8'.
     size = digit_h
     for _ in range(40):
@@ -81,6 +89,13 @@ def make(idx, digit_h):
 
 
 if __name__ == "__main__":
-    os.makedirs(OUT, exist_ok=True)
-    for i, h in enumerate(HEIGHTS):
-        make(i, h)
+    for name, heights in SETS.items():
+        out = os.path.join(ROOT, name)
+        os.makedirs(out, exist_ok=True)
+        for i, h in enumerate(heights):
+            make(out, i, h)
+        with open(os.path.join(out, "fonts.xml"), "w") as fh:
+            fh.write("<fonts>\n")
+            for i in range(len(heights)):
+                fh.write(f'    <font id="Big{i}" filename="big{i}.fnt" antialias="true" filter="0123456789:." />\n')
+            fh.write("</fonts>\n")

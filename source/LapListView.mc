@@ -2,8 +2,8 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-// All laps, oldest at the top. Opens scrolled to the latest laps.
-//   UP / DOWN   scroll (UP at the top goes back to the stopwatch)
+// All laps, oldest at the top. Opens at lap 1; DOWN scrolls to later laps.
+//   UP / DOWN   scroll (UP at lap 1 goes back to the stopwatch)
 //   BACK        back to the stopwatch
 //   START       start / stop, same as on the main screen
 class LapListView extends WatchUi.View {
@@ -16,7 +16,6 @@ class LapListView extends WatchUi.View {
     function initialize(m as StopwatchModel) {
         View.initialize();
         _m = m;
-        top = maxTop();
     }
 
     function maxTop() as Number {
