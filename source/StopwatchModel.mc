@@ -28,10 +28,12 @@ class StopwatchModel {
 
     private var _refreshTimer as Timer.Timer;
     private var _alertTimer as Timer.Timer;
+    private var _toneTimer as Timer.Timer;   // second beep of the double beep
 
     function initialize() {
         _refreshTimer = new Timer.Timer();
         _alertTimer = new Timer.Timer();
+        _toneTimer = new Timer.Timer();
 
         var iv = $.loadSetting("intervalCs");
         if (iv instanceof Number && iv >= 0) {
@@ -66,6 +68,7 @@ class StopwatchModel {
         running = true;
         _refreshTimer.start(method(:onRefresh), 100, true);
         armFromNow();
+        signal(false);
         WatchUi.requestUpdate();
     }
 
@@ -156,7 +159,7 @@ class StopwatchModel {
         if (!running || !beepsActive()) {
             return;
         }
-        signal();
+        signal(true);
         // Skip any beeps that were missed, e.g. if the watch was busy.
         _nextBeep = elapsed() / intervalMs() + 1;
         armNext();
@@ -164,11 +167,26 @@ class StopwatchModel {
 
     // ---- alerts -----------------------------------------------------------
 
-    private function signal() as Void {
+    // Interval alert: buzz-pause-buzz and two beeps. Start: one of each.
+    private function signal(double as Boolean) as Void {
         if (vibrateOn && (Attention has :vibrate)) {
-            Attention.vibrate([new Attention.VibeProfile(80, 150)]);
+            var vibe = [new Attention.VibeProfile(80, 150)] as Array<Attention.VibeProfile>;
+            if (double) {
+                vibe.add(new Attention.VibeProfile(0, 120));
+                vibe.add(new Attention.VibeProfile(80, 150));
+            }
+            Attention.vibrate(vibe);
         }
         if (soundOn && (Attention has :playTone)) {
+            Attention.playTone(Attention.TONE_LOUD_BEEP);
+            if (double) {
+                _toneTimer.start(method(:onSecondTone), 300, false);
+            }
+        }
+    }
+
+    function onSecondTone() as Void {
+        if (Attention has :playTone) {
             Attention.playTone(Attention.TONE_LOUD_BEEP);
         }
     }
@@ -182,6 +200,7 @@ class StopwatchModel {
     function shutdown() as Void {
         _refreshTimer.stop();
         _alertTimer.stop();
+        _toneTimer.stop();
     }
 }
 

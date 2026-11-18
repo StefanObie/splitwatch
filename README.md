@@ -5,7 +5,8 @@ A full-screen stopwatch with an interval beep, a Connect IQ watch app for the Ga
 - The time fills the screen: tenths while running (`12.7`), hundredths when stopped (`12.75`, yellow).
   Stopped past a minute, the hundredths are drawn smaller (`1:02` big, `.75` small) so the rest stays big.
 - The latest lap time shows small under the big time.
-- **Beep interval:** for example `12.75` signals at 12.75, 25.50, 38.25 … for as long as the stopwatch runs. `00:00.00` = off.
+- **Beep interval:** for example `12.75` signals at 12.75, 25.50, 38.25 … for as long as the stopwatch runs, with a double buzz and beep. `00:00.00` = off.
+- Starting gives a single buzz and beep. Both follow the Vibrate and Sound settings.
 - It never starts a Garmin activity and records nothing.
 
 ## Buttons
